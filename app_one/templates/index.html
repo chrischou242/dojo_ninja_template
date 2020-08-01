@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Create Dojo</h1>
+
+    {% if messages %}
+    <ul class="messages">    
+        {% for message in messages %}    
+        <li >{{ message }}</li>    
+    {% endfor %}
+    </ul>
+        {% endif %}
+
+    <div>
+        <form action="/add_dojo" method="POST">
+            {% csrf_token %}
+            <p>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required>
+            </p>
+
+            <p>
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" required>
+            </p>
+
+            <p>
+            <label for="state">State</label>
+            <input type="text" name="state" id="state" required>
+            </p>
+            
+            <button type="submit">submit</button>
+        </form>
+
+
+
+
+
+
+
+        <h1>Create Ninja</h1>
+        <form action="/add_ninja" method="POST">
+            {% csrf_token %}
+            <p>
+                <label for="first_name">First Name</label>
+                <input type="text" name="first_name" id="first_name" required>
+                </p>
+    
+                <p>
+                <label for="last_name"></label>
+                <input type="text" name="last_name" id="last_name" required>
+                </p>
+                
+                <label for="dojo">Dojo</label>
+                <select name="dojo" id="dojo">
+                    {% for dojo in Dojos %}
+                        <option value="{{dojo.id}}">{{dojo.name}}</option>
+                        {% endfor %}
+                </select>
+                
+                <button type="submit">submit</button>
+        
+                {% for dojo in Dojos %}
+                <h2>{{dojo.name}}, {{dojo.city}} , {{dojo.state}}</h2>
+                {% for ninja in dojo.ninjas.all %}
+                    <p>{{ninja.first_name}} , {{ninja.last_name}} , {{ninja.dojo_id.name}}</p>
+                    {% endfor %}
+            {% endfor %}
+        
+        
+        </form>
+    </div>
+    
+
+   
+    
+</body>
+</html>
